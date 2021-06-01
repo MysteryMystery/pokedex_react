@@ -3,9 +3,9 @@ import React from "react";
 export default (props) => {
     let secondary = props.secondary ? true : false;
 
-    const classes = "mx-auto m-2 " + (secondary ? "bg-gray-500 rounded-3xl" : "bg-white rounded-full")
+    const classes = "mx-1 shadow m-2 " + (secondary ? "bg-gray-500 rounded-3xl" : "bg-white rounded-full") + " " + props.className
     const styles = {
-        backgroundImage: "url(https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png)",
+        //backgroundImage: "url(https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png)",
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
     }

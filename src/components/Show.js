@@ -49,30 +49,29 @@ export class Show extends React.Component {
         if (pokemon === undefined || evoChain === undefined)
             return <Loading></Loading>
 
-        return <div>
-            <div className={"flex justify-center"}>
-                <div>
-                    <SpriteImg pokemon={pokemon}/>
-                </div>
-            </div>
-
-            <div className={"flex flex-wrap justify-center bg-gray-800"}>
-                { Object.entries(pokemon.sprites)
-                    .filter(([k, v]) => v !== null && typeof v !== "object")
-                    .sort((a, b) => b[0].localeCompare(a[0]))
-                    .map(([name, source]) =>
-                        <div key={name}>
-                            <SpriteImg url={source} alt={name} secondary={true} />
-                        </div>
-                ) }
-            </div>
-
-            <div className={"flex flex-wrap justify-center"}>
-                { this.state.evo_chain.map(p =>
-                    <div key={p.id}>
-                        <SpriteImg url={p.sprite} alt={p.id} secondary={true} />
+        return <div className={"flex justify-center"}>
+            <div className={"w-full md:w-5/6 shadow-inner bg-gray-500 p-4"}>
+                <div className={"flex flex-wrap bg-gray-800 rounded w-full md:2/3 lg:w-1/3"}>
+                    <div>
+                        <SpriteImg pokemon={pokemon}/>
                     </div>
-                ) }
+                    { Object.entries(pokemon.sprites)
+                        .filter(([k, v]) => v !== null && typeof v !== "object")
+                        .sort((a, b) => b[0].localeCompare(a[0]))
+                        .map(([name, source]) =>
+                            <div key={name}>
+                                <SpriteImg url={source} alt={name} secondary={true} />
+                            </div>
+                        ) }
+                </div>
+
+                <div className={"flex flex-wrap justify-center"}>
+                    { this.state.evo_chain.map(p =>
+                        <div key={p.id}>
+                            <SpriteImg url={p.sprite} alt={p.id} secondary={true} />
+                        </div>
+                    ) }
+                </div>
             </div>
         </div>
     }

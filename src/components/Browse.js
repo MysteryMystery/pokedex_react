@@ -50,7 +50,7 @@ export class Browse extends React.Component {
                     >
                         <div className={"grid grid-cols-2"}>
                             <div className={!this.isSelected(p) ? "col-span-2" : ""}>
-                                <SpriteImg pokemon={p}/>
+                                <SpriteImg className={"mx-auto"} pokemon={p}/>
 
                                 <div style={{ border: "solid 0.1rem", borderColor: PokemonTypeColourMap.getBorder(p.types[0].type.name) }} />
 
