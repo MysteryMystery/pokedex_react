@@ -2,7 +2,6 @@
   "name": "pokedex",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://mysterymystery.github.io/pokedex_react",
   "dependencies": {
     "@craco/craco": "^6.1.2",
     "@testing-library/jest-dom": "^5.12.0",
@@ -17,8 +16,6 @@
     "web-vitals": "^1.1.2"
   },
   "scripts": {
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -b gh-pages -d build",
     "start": "craco start",
     "build": "craco build",
     "test": "craco test",
