@@ -1,0 +1,11 @@
+.browse .card {
+    width: 10rem;
+    height: 12rem;
+    -moz-box-shadow:    inset 0 0 1rem #000000;
+    -webkit-box-shadow: inset 0 0 1rem #000000;
+    box-shadow:         inset 0 0 1rem #000000;
+}
+
+.browse .card.expanded {
+    width: 20rem;
+}
