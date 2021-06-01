@@ -21,7 +21,7 @@ export class Browse extends React.Component {
         let api = PokeAPI.getInstance();
         let lowerBound = this.state.pokemon.length
 
-        for (let i = lowerBound; i <= lowerBound + batchSize; i++){
+        for (let i = lowerBound + 1; i <= lowerBound + batchSize; i++){
             if (i > api.NUMBER_OF_POKEMON)
                 break;
             api.getPokemon(i).then(x => {
