@@ -40,7 +40,7 @@ export class Browse extends React.Component {
         const {pokemon} = this.state;
 
         return <div>
-            <div className="flex flex-wrap browse justify-center overflow-scroll">
+            <div className="flex flex-wrap browse justify-center">
                 { pokemon.map(p =>
                     <div key={p.id}
                          className={"card shadow-inner text-center bg-gray-800 hover:bg-gray-500 p-4 " + (this.state.expanded_pokemon === p.id ? "expanded" : "" )}
@@ -65,7 +65,7 @@ export class Browse extends React.Component {
                 }
             </div>
             <div className={"text-center"}>
-                <button className={"bg-gray-200 p-3 hover:shadow-inner"}
+                <button className={"bg-gray-200 text-gray-800 p-3 hover:shadow-inner"}
                         onClick={() => this.loadNextPokemonBatch()}
                 >Load More...</button>
             </div>
