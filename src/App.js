@@ -7,7 +7,7 @@ import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 
 function App() {
   return (
-      <Router basename={"pokedex_react"}>
+      <Router basename={"/pokedex_react"}>
           <div className="App h-screen bg-black text-white overflow-auto">
              <Switch>
                  <Route exact path="/" component={ Browse }/>
