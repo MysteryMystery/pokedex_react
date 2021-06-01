@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import PokeAPI from "../lib/PokeAPI";
 import SpriteImg from "./lib/SpriteImg";
+import Loading from "./lib/Loading";
 
 export class Show extends React.Component {
     state = {
@@ -46,7 +47,7 @@ export class Show extends React.Component {
         let evoChain = this.state.evo_chain;
 
         if (pokemon === undefined || evoChain === undefined)
-            return <div></div>
+            return <Loading></Loading>
 
         return <div>
             <div className={"flex justify-center"}>
