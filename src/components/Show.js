@@ -2,6 +2,11 @@ import React, {useState} from "react";
 import PokeAPI from "../lib/PokeAPI";
 import SpriteImg from "./lib/SpriteImg";
 import Loading from "./lib/Loading";
+import StatsPane from "./StatsPane";
+import FlexCard from "./lib/FlexCard";
+import Badge from "./lib/Badge";
+import {ucfirst} from "../lib/util/StringOps";
+import MoveListPane from "./lib/MoveListPane";
 
 export class Show extends React.Component {
     state = {
@@ -30,11 +35,7 @@ export class Show extends React.Component {
             response = response.json()
             let pokemon = await PokeAPI.getInstance().getPokemon(obj.species.name)
 
-            saved.push({
-                id: pokemon.id,
-                sprite: pokemon.sprites.front_default,
-                name: pokemon.name
-            })
+            saved.push(pokemon)
             obj = obj.evolves_to[0]
             console.log(obj)
         }
@@ -50,27 +51,46 @@ export class Show extends React.Component {
             return <Loading></Loading>
 
         return <div className={"flex justify-center"}>
-            <div className={"w-full md:w-5/6 shadow-inner bg-gray-500 p-4"}>
-                <div className={"flex flex-wrap bg-gray-800 rounded w-full md:2/3 lg:w-1/3"}>
-                    <div>
-                        <SpriteImg pokemon={pokemon}/>
-                    </div>
-                    { Object.entries(pokemon.sprites)
-                        .filter(([k, v]) => v !== null && typeof v !== "object")
-                        .sort((a, b) => b[0].localeCompare(a[0]))
-                        .map(([name, source]) =>
-                            <div key={name}>
-                                <SpriteImg url={source} alt={name} secondary={true} />
+            <div className={"w-full lg:w-5/6 shadow-inner-lg bg-gray-500 p-4"}>
+                <div className={"grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-4"}>
+                    <div className={"order-first"}>
+                        <FlexCard>
+                            <div>
+                                <SpriteImg pokemon={pokemon}/>
                             </div>
-                        ) }
-                </div>
+                            { Object.entries(pokemon.sprites)
+                                .filter(([k, v]) => v !== null && typeof v !== "object")
+                                .sort((a, b) => b[0].localeCompare(a[0]))
+                                .map(([name, source]) =>
+                                    <div key={name}>
+                                        <SpriteImg url={source} alt={name} secondary={true} />
+                                    </div>
+                                ) }
+                        </FlexCard>
 
-                <div className={"flex flex-wrap justify-center"}>
-                    { this.state.evo_chain.map(p =>
-                        <div key={p.id}>
-                            <SpriteImg url={p.sprite} alt={p.id} secondary={true} />
-                        </div>
-                    ) }
+                        <FlexCard className={"bg-gray-200 justify-center"}>
+                            { this.state.evo_chain.map(p =>
+                                <div key={p.id} className={""}>
+                                    <SpriteImg url={p.sprites.front_default} alt={p.id} secondary={true} />
+                                    <div className={"mb-3"}>
+                                        { p.types.map(type => <Badge key={type.type.name} type={type.type.name}>
+                                            {ucfirst(type.type.name)}</Badge>
+                                        ) }
+                                    </div>
+                                </div>
+                            ) }
+                        </FlexCard>
+                    </div>
+                    <div className={"order-2 md:order-3"}>
+                        <FlexCard>
+                            <StatsPane pokemon={pokemon} showValue={true}/>
+                        </FlexCard>
+                    </div>
+                    <div className={"order-last"}>
+                        <FlexCard>
+                            <MoveListPane pokemon={pokemon}/>
+                        </FlexCard>
+                    </div>
                 </div>
             </div>
         </div>

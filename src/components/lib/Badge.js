@@ -7,7 +7,7 @@ export default class Badge extends React.Component {
                      style={{
                          backgroundColor:  PokemonTypeColourMap.getBG(this.props.type),
                          borderColor: PokemonTypeColourMap.getBorder(this.props.type),
-                         borderWidth: "0.15rem"
+                         borderWidth: "0.15rem",
                      }}
         >
             {this.props.children}

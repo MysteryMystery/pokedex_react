@@ -5,6 +5,7 @@ import PokemonTypeColourMap from "../lib/PokemonTypeColourMap";
 import StatsPane from "./StatsPane";
 import InfiniteScroll from "react-infinite-scroll-component";
 import SpriteImg from "./lib/SpriteImg";
+import {ucfirst} from "../lib/util/StringOps";
 
 export class Browse extends React.Component {
     state = {
@@ -43,7 +44,7 @@ export class Browse extends React.Component {
             <div className="flex flex-wrap browse justify-center">
                 { pokemon.map(p =>
                     <div key={p.id}
-                         className={"card shadow-inner text-center bg-gray-800 hover:bg-gray-500 p-4 " + (this.state.expanded_pokemon === p.id ? "expanded" : "" )}
+                         className={"card shadow-inner-lg text-center bg-gray-800 hover:bg-gray-500 p-4 " + (this.state.expanded_pokemon === p.id ? "expanded" : "" )}
                          onMouseOver={ () => this.setState({expanded_pokemon: p.id})}
                         //onMouseOut={ () => this.setState({expanded_pokemon: 0})}
                          onClick={() => this.props.history.push("/show/" + p.id)}
@@ -56,7 +57,7 @@ export class Browse extends React.Component {
 
                                 <div className="text-white">{p.name[0].toUpperCase() + p.name.slice(1)}</div>
                                 { p.types.map(type => <Badge key={type.type.name} type={type.type.name}>
-                                    {type.type.name[0].toUpperCase() + type.type.name.slice(1)}</Badge>
+                                    {ucfirst(type.type.name)}</Badge>
                                 ) }
                             </div>
                             { this.isSelected(p) ? <StatsPane pokemon={p}/> : "" }
