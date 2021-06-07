@@ -31,17 +31,7 @@ class PokeAPI {
     }
 
     async getEvolutionChainFromSpecies(id){
-        /*
-        return fetch(this.endpoint + "pokemon-species/" + id)
-            .then(t => t.json())
-            .then(x =>
-                fetch(x.evolution_chain.url)
-                    .then(t => t.json())
-            )
-         */
-
         let species = await this.getSpecies(id)
-        console.log(species)
         let evoChain = this.cache.getEvolutionChain(id)
         if (evoChain === undefined){
             evoChain = await fetch(species.evolution_chain.url).then(j => j.json())

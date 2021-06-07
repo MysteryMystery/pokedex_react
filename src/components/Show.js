@@ -31,13 +31,12 @@ export class Show extends React.Component {
         let saved = []
         let obj = evoChain.chain
         while (obj && obj.species){
-            let response = await fetch(obj.species.url)
-            response = response.json()
-            let pokemon = await PokeAPI.getInstance().getPokemon(obj.species.name)
+            let urlspl = obj.species.url.split("/")
+            let pid = parseInt(urlspl[urlspl.length - 2])
+            let pokemon = await PokeAPI.getInstance().getPokemon(pid)
 
             saved.push(pokemon)
             obj = obj.evolves_to[0]
-            console.log(obj)
         }
 
         return saved;

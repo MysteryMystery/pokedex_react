@@ -4,7 +4,7 @@ export default class Cache {
     static instance;
 
     constructor() {
-        this._pokemon = [];
+        this._pokemon = []; // stores all of cached pokemon. pokemon id - 1 == arr index
         this._pointer = 0;
         Cache.instance = this;
     }
@@ -16,23 +16,26 @@ export default class Cache {
     }
 
     getPokemon(id){
-        return this._pokemon[id];
+        return this._pokemon[id - 1];
     }
 
     putPokemon(id, data){
-        this._pokemon[id] = data;
+        this._pokemon[id - 1] = data;
     }
 
     getSpecies(id){
-        if (this._pokemon[id] && this._pokemon[id].species && this._pokemon[id].species.url === undefined)
-            return this._pokemon[id].species
+        let pokemon = this.getPokemon(id);
+        if (pokemon && pokemon.species && pokemon.species.url === undefined)
+            return pokemon.species
         return undefined;
     }
 
     putSpecies(id, data){
-        if (this._pokemon[id] === undefined)
-            this._pokemon[id] = {}
-        this._pokemon[id].species = data;
+        if (this.getPokemon(id) === undefined)
+            this.putPokemon(id, {})
+        let pokemon = this.getPokemon(id)
+        pokemon.species = data;
+        this.putPokemon(id, pokemon)
     }
 
     getEvolutionChain(id){
@@ -43,9 +46,12 @@ export default class Cache {
     }
 
     putEvolutionChain(id, data){
-        if (this._pokemon[id] === undefined)
-            this._pokemon[id] = {species: {}}
-        this._pokemon[id].species.evolution_chain = data;
+        let pokemon = this.getPokemon(id)
+        if (pokemon === undefined)
+            this.putPokemon(id, {species: {}})
+        pokemon = this.getPokemon(id);
+        pokemon.species.evolution_chain = data;
+        this.putPokemon(id, pokemon)
     }
 
     [Symbol.iterator]() {
