@@ -53,6 +53,7 @@ export class Show extends React.Component {
             <div className={"w-full lg:w-5/6 shadow-inner-lg bg-gray-500 p-4"}>
                 <div className={"grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-4"}>
                     <div className={"order-first"}>
+                        {/* Main sprites */}
                         <FlexCard>
                             <div>
                                 <SpriteImg pokemon={pokemon}/>
@@ -67,10 +68,18 @@ export class Show extends React.Component {
                                 ) }
                         </FlexCard>
 
+                        {/* Evo chain */}
                         <FlexCard className={"bg-gray-200 justify-center"}>
                             { this.state.evo_chain.map(p =>
-                                <div key={p.id} className={""}>
-                                    <SpriteImg url={p.sprites.front_default} alt={p.id} secondary={true} />
+                                <div key={p.id}
+                                     className={"cursor-pointer"}
+                                     onClick={() => this.props.history.push("/show/" + p.id)}
+                                >
+                                    <SpriteImg
+                                        url={p.sprites.front_default}
+                                        alt={p.id}
+                                        secondary={true}
+                                    />
                                     <div className={"mb-3"}>
                                         { p.types.map(type => <Badge key={type.type.name} type={type.type.name}>
                                             {ucfirst(type.type.name)}</Badge>

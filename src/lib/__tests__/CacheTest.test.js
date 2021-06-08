@@ -16,6 +16,7 @@ test("PokeAPI GetPokemon", async () => {
 
     p = await PokeAPI.getInstance().getPokemon(25);
     q = Cache.getInstance().getPokemon(25)
+    console.log(q)
     expect(p).not.toBeUndefined()
     expect(q).not.toBeUndefined()
 })

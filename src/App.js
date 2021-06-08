@@ -16,7 +16,7 @@ function App() {
                  <Route exact path="/" component={ Browse }/>
                  <Route exact path={"/loading"} component={Loading}/>
                  <Route exact path={"/cache"}>
-                     <ReactJson src={Cache.getInstance().all} theme="monokai"/>
+                     <ReactJson src={Cache.getInstance().getAllPokemon()} theme="monokai" name={null}/>
                  </Route>
                  <Route path="/show/:pokemon" component={Show}/>
              </Switch>

@@ -3,9 +3,9 @@ import PokeAPI from "../lib/PokeAPI";
 import Badge from "./lib/Badge";
 import PokemonTypeColourMap from "../lib/PokemonTypeColourMap";
 import StatsPane from "./StatsPane";
-import InfiniteScroll from "react-infinite-scroll-component";
 import SpriteImg from "./lib/SpriteImg";
 import {ucfirst} from "../lib/util/StringOps";
+import SearchBar from "./lib/SearchBar";
 
 export class Browse extends React.Component {
     state = {
@@ -41,6 +41,7 @@ export class Browse extends React.Component {
         const {pokemon} = this.state;
 
         return <div>
+            <SearchBar pokemon={pokemon}/>
             <div className="flex flex-wrap browse justify-center">
                 { pokemon.map(p =>
                     <div key={p.id}
