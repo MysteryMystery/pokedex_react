@@ -4,8 +4,7 @@ export default class Cache {
     static instance;
 
     constructor() {
-        this._pokemon = []; // stores all of cached pokemon. pokemon id - 1 == arr index
-        this._pointer = 0;
+        this.STORAGE_KEY = "pokemon";
         Cache.instance = this;
     }
 
@@ -15,12 +14,22 @@ export default class Cache {
         return this.instance
     }
 
+    getAllPokemon(){
+        let allPokemon = localStorage.getItem(this.STORAGE_KEY)
+        if (allPokemon === null)
+            return [];
+        return JSON.parse(allPokemon);
+    }
+
     getPokemon(id){
-        return this._pokemon[id - 1];
+        let loaded = this.getAllPokemon()
+        return loaded[id - 1];
     }
 
     putPokemon(id, data){
-        this._pokemon[id - 1] = data;
+        let allPokemon = this.getAllPokemon()
+        allPokemon[id - 1] = data;
+        localStorage.setItem("pokemon", JSON.stringify(allPokemon));
     }
 
     getSpecies(id){
@@ -51,19 +60,6 @@ export default class Cache {
             this.putPokemon(id, {species: {}})
         pokemon = this.getPokemon(id);
         pokemon.species.evolution_chain = data;
-        this.putPokemon(id, pokemon)
-    }
-
-    [Symbol.iterator]() {
-        return this.next();
-    }
-
-    next() {
-        let done = this._pointer >= this._pokemon.length - 1;
-
-        return {
-            done: done,
-            value: this._pokemon[this._pointer++]
-        }
+        this.putPokemon(id, pokemon);
     }
 }

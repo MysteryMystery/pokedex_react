@@ -24,7 +24,7 @@ class PokeAPI {
     async getPokemon(id){
         let p = this.cache.getPokemon(id)
         if (p === undefined){
-            p = fetch(this.endpoint + "pokemon/" + id).then(t => t.json())
+            p = await fetch(this.endpoint + "pokemon/" + id).then(t => t.json())
             this.cache.putPokemon(id, p)
         }
         return p;
