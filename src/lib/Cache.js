@@ -5,6 +5,7 @@ export default class Cache {
 
     constructor() {
         this.STORAGE_KEY = "pokemon";
+        this._pokemon = [];
         Cache.instance = this;
     }
 
@@ -15,10 +16,7 @@ export default class Cache {
     }
 
     getAllPokemon(){
-        let allPokemon = localStorage.getItem(this.STORAGE_KEY)
-        if (allPokemon === null)
-            return [];
-        return JSON.parse(allPokemon);
+        return this._pokemon
     }
 
     getPokemon(id){
@@ -27,9 +25,7 @@ export default class Cache {
     }
 
     putPokemon(id, data){
-        let allPokemon = this.getAllPokemon()
-        allPokemon[id - 1] = data;
-        localStorage.setItem("pokemon", JSON.stringify(allPokemon));
+        this._pokemon[id - 1] = data;
     }
 
     getSpecies(id){
