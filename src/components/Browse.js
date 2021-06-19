@@ -6,11 +6,14 @@ import StatsPane from "./StatsPane";
 import SpriteImg from "./lib/SpriteImg";
 import {ucfirst} from "../lib/util/StringOps";
 import SearchBar from "./lib/SearchBar";
+import Loading from "./lib/Loading";
+import * as SVGLoaders from "svg-loaders-react";
 
 export class Browse extends React.Component {
     state = {
         pokemon: [],
         expanded_pokemon: 0,
+        is_loading_pokemon: false,
     }
     BATCH_SIZE = 50;
 
@@ -20,17 +23,23 @@ export class Browse extends React.Component {
 
     loadNextPokemonBatch(batchSize = this.BATCH_SIZE){
         let api = PokeAPI.getInstance();
-        let lowerBound = this.state.pokemon.length
+        let lowerBound = this.state.pokemon.length;
+        this.setState({is_loading_pokemon: true});
 
-        for (let i = lowerBound + 1; i <= lowerBound + batchSize; i++){
-            if (i > api.NUMBER_OF_POKEMON)
-                break;
-            api.getPokemon(i).then(x => {
-                this.state.pokemon.push(x);
-                this.state.pokemon.sort((o, t) => o.id > t.id)
-                this.setState(this.state)
-            })
-        }
+        (async () => {
+            for (let i = lowerBound + 1; i <= lowerBound + batchSize; i++){
+                if (i > api.NUMBER_OF_POKEMON)
+                    break;
+                api.getPokemon(i).then(x => {
+                    //this.state.pokemon.push(x);
+                    //this.state.pokemon.sort((o, t) => o.id > t.id)
+                    this.state.pokemon.splice(i - 1, 0, x)
+                })
+            }
+        })().then(() => {
+            this.state.is_loading_pokemon = false;
+            this.setState(this.state);
+        })
     }
 
     isSelected(pokemon) {
@@ -69,7 +78,7 @@ export class Browse extends React.Component {
             <div className={"text-center"}>
                 <button className={"bg-gray-200 text-gray-800 p-3 hover:shadow-inner"}
                         onClick={() => this.loadNextPokemonBatch()}
-                >Load More...</button>
+                >{ this.state.is_loading_pokemon ?  <SVGLoaders.TailSpin/> : "Load More..."}</button>
             </div>
         </div>
 
