@@ -44,6 +44,7 @@ export class Browse extends React.Component {
             }
         })().then(() => {
             //me.state.is_loading_pokemon = false;
+            console.log(this.state)
             me.setState(this.state);
         })
     }
