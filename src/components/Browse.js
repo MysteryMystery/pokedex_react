@@ -17,6 +17,12 @@ export class Browse extends React.Component {
     }
     BATCH_SIZE = 50;
 
+    constructor(props) {
+        super(props);
+
+        this.loadNextPokemonBatch = this.loadNextPokemonBatch.bind(this);
+    }
+
     componentDidMount() {
         this.loadNextPokemonBatch(151)
     }
@@ -25,7 +31,7 @@ export class Browse extends React.Component {
         let api = PokeAPI.getInstance();
         let lowerBound = this.state.pokemon.length;
         this.setState({is_loading_pokemon: true});
-
+        let me = this;
         (async () => {
             for (let i = lowerBound + 1; i <= lowerBound + batchSize; i++){
                 if (i > api.NUMBER_OF_POKEMON)
@@ -33,12 +39,12 @@ export class Browse extends React.Component {
                 api.getPokemon(i).then(x => {
                     //this.state.pokemon.push(x);
                     //this.state.pokemon.sort((o, t) => o.id > t.id)
-                    this.state.pokemon.splice(i - 1, 0, x)
+                    me.state.pokemon.splice(i - 1, 0, x)
                 })
             }
         })().then(() => {
-            this.state.is_loading_pokemon = false;
-            this.setState(this.state);
+            me.state.is_loading_pokemon = false;
+            me.setState(this.state);
         })
     }
 

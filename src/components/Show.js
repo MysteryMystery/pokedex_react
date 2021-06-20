@@ -14,7 +14,22 @@ export class Show extends React.Component {
         evo_chain: undefined,
     }
 
+    constructor(props) {
+        super(props);
+        this.populate = this.populate.bind(this);
+    }
+
     componentDidMount() {
+        this.populate()
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        const hasLocationChanged = this.props.location !== prevProps.location;
+        if (hasLocationChanged)
+            this.populate()
+    }
+
+    populate(){
         let pokemon = this.props.match.params.pokemon;
         PokeAPI.getInstance()
             .getPokemon(pokemon)
