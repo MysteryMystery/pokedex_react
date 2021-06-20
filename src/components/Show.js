@@ -5,7 +5,7 @@ import Loading from "./lib/Loading";
 import StatsPane from "./StatsPane";
 import FlexCard from "./lib/FlexCard";
 import Badge from "./lib/Badge";
-import {ucfirst} from "../lib/util/StringOps";
+import {ucfirst, ucHyphenatedWords} from "../lib/util/StringOps";
 import MoveListPane from "./lib/MoveListPane";
 
 export class Show extends React.Component {
@@ -101,6 +101,24 @@ export class Show extends React.Component {
                                         ) }
                                     </div>
                                 </div>
+                            ) }
+                        </FlexCard>
+
+                        {/* Abilities */}
+                        <FlexCard className={"bg-gray-200 justify-center"}>
+                            { this.state.pokemon.abilities
+                                .sort((a, b) => {
+                                    return a.slot < b.slot;
+                                })
+                                .map(ab =>
+                                    <div key={ab.slot}
+                                         className={"cursor-pointer"}
+                                    >
+                                        <div className={"my-3"}>
+                                            <Badge className={"bg-black"} autoGen={false}>
+                                                {ucHyphenatedWords(ab.ability.name)}</Badge>
+                                        </div>
+                                    </div>
                             ) }
                         </FlexCard>
                     </div>

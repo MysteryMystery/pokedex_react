@@ -30,7 +30,7 @@ export class Browse extends React.Component {
     loadNextPokemonBatch(batchSize = this.BATCH_SIZE){
         let api = PokeAPI.getInstance();
         let lowerBound = this.state.pokemon.length;
-        this.setState({is_loading_pokemon: true});
+        //this.setState({is_loading_pokemon: true});
         let me = this;
         (async () => {
             for (let i = lowerBound + 1; i <= lowerBound + batchSize; i++){
@@ -43,7 +43,7 @@ export class Browse extends React.Component {
                 })
             }
         })().then(() => {
-            me.state.is_loading_pokemon = false;
+            //me.state.is_loading_pokemon = false;
             me.setState(this.state);
         })
     }
