@@ -20,7 +20,7 @@ export class Browse extends React.Component {
     constructor(props) {
         super(props);
 
-        this.loadNextPokemonBatch = this.loadNextPokemonBatch.bind(this);
+        //this.loadNextPokemonBatch = this.loadNextPokemonBatch.bind(this);
     }
 
     componentDidMount() {
